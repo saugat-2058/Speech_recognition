@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @keyframes moon {
+    to { 
+      box-shadow: inset 10rem 0 whitesmoke;
+      transform: rotate(10deg);
+    }
+}
+
+html {
+ background-color: black;
+ height: 100%;
+}
+
+.circle {
+  width: 10rem;
+  height: 10rem;
+  background: #000000;
+  margin: 3rem auto;
+  border-radius: 50%;
+  box-shadow: inset -2rem 0 white;
+}
+
+body {
+  background: black;
+  color: #fff;
+  font: 300 87.5%/1.5em 'Open Sans', sans-serif;
+}
+
+.title {
+    font-family: Vollkorn;
+    color: white;
+    font-size: 48px;
+    text-align: center;
+  margin: -0rem;
+}
+
+/* Fonts */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+
+/* Simple Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Form Layout */
+.form-wrapper {
+  background: #000000;
+  border-radius: 2px;
+  margin: 50px auto;
+  position: relative;
+  width: 300px;
+}
+
+form {
+  padding: 30px 20px 0;
+}
+
+.form-item {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.form-item input {
+  border: none;
+  background: #1F1F1F;
+  border-radius: 2px;
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  height: 50px;
+  padding: 0 16px;
+  transition: background 0.3s ease-in-out;
+  width: 100%;
+}
+
+.form-item input:focus {
+  background: #4d545e;
+  outline: none;
+}
+
+.button-panel {
+  margin: 20px 0 0;
+  width: 100%;
+}
+
+.button-panel .button {
+  background: #8B0000;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  height: 50px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background 0.3s ease-in-out;
+  width: 100%;
+}
+
+.button:hover {
+  background: #660000;
+}
+
+.form-footer {
+  font-size: 0.9em;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.form-footer a {
+  color: #e3e3e3;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.form-footer a:hover {
+  color: #c0c0c0;
+}
+
+
+
+  </style>
+</head>
+<body>
+    
+<div class="circle"></div>
+<br>
+<div class="title">TRIOSNA</div>
+
+<link href='https://fonts.googleapis.com/css?family=Vollkorn:400,700' rel='stylesheet' type='text/css'>
+
+<div class="form-wrapper">
+  
+  <form action="/login-submit" method="post">
+    
+    <div class="form-item">
+      {% if message %}
+      <p>{{ message }}</p>
+      {% else %}
+      <p></p>
+      {% endif %}
+      <label for="text">
+        <span class="fontawesome-user"></span></label>
+      <input type="text" name="username" required="required" placeholder="Username"></input>
+     <input type="password" name="password" required="required" placeholder="Password"></input>
+     <p>Not yet user <b><em><a href="/signup">Register</a></em></b></p>
+    </div>
+    
+   <div class="button-panel">
+      <input type="submit" class="button" title="Sign In" value="Sign In"></input>
+    </div>
+    
+    
+  </form>
+  <!-- / end form -->
+
+<!-- / end form-wrapper -->
+
+</div>
+</body>
+</html>

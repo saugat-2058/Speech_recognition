@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    
+<style>
+    .json-container {
+    max-width: 1000PX;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+</style>
+</head>
+<body>
+    <li><a href="/">Return to the main  lobby Team Page</a></li>
+    <li><a href="/speech-recon">Return to the main Speech Page</a></li>
+    <li><a href="/test_sys">Test New Speech Again</a></li>
+    
+
+    <h1>Audios</h1>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong> Raw Audio File</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong> Preprocessed Audio File</strong></span>
+    <br>
+    {% for audio_path in audio_paths %}
+    <!-- <audio src=""></audio> -->
+        <!-- <img src="" alt= "Image"> -->
+        
+        <audio controls>
+            <source src="{{audio_path}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        
+
+    {% endfor %}
+
+    <h1>Images</h1>
+    {% for image_path in image_paths %}
+        <img src="{{ image_path }}" alt="Image">
+    {% endfor %}
+
+    <h1>Report Analysis</h1>
+    {% for json_path in json_paths %}
+        <p class="jsons" style="display: none;">JSON File: {{ json_path }}</p>
+        <!-- Use JavaScript or server-side templating to display JSON content -->
+    {% endfor %}
+    <div id="json-container"></div>
+
+    <script>
+        // Function to fetch and display JSON content
+        function fetchAndDisplayJSON(jsonPath) {
+            // Fetch the JSON file
+            fetch(jsonPath)
+                .then(response => response.json())
+                .then(data => {
+                    // Create a new <pre> element to display JSON content
+                    var preElement = document.createElement('pre');
+                    preElement.textContent = JSON.stringify(data, null, 2);
+
+                    // Append the <pre> element to the JSON container
+                    document.getElementById('json-container').appendChild(preElement);
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+
+        // Extract text content of <p> elements with class 'jsons' and fetch/display JSON for each
+        var jsonParagraphs = document.querySelectorAll('.jsons');
+        jsonParagraphs.forEach(function(paragraph) {
+            var jsonPath = paragraph.textContent.trim().replace('JSON File: ', ''); // Extract JSON file path
+            fetchAndDisplayJSON(jsonPath);
+        });
+    </script>
+    
+
+</body>
+</html>

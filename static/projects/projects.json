@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Automatic Speech Recognition",
+    "desc": "Full-Stack Flipkart with Admin Dashboard and Paytm Payment Gateway. MERN Stack WebApp, ready to use for business.",
+    "image": "speech",
+    "category": "AI",
+    "links": {
+      "view": "/speech-recon",
+      "code": ""
+    }
+  },
+
+  {
+    "name": "More ProjectComing Soon",
+    "desc": "More projects are on the way yo the development",
+    "image": "bootstrapportfolio",
+    "category": "AI",
+    "links": {
+      "view": "#",
+      "code": ""
+    }
+  }
+ 
+]
