@@ -464,13 +464,13 @@ class SpeechRecognizer:
         info_label = tk.Label(welcome_window, text="Click to start recording", fg="black", font=('Helvetica', 12))
         info_label.pack(pady=5)
         welcome_window.lift()
-        # welcome_window.attribute("-topmost",True)
-        # welcome_window.mainloop()
+        welcome_window.attributes("-topmost",True)
+        welcome_window.mainloop()
         return welcome_window
         
-# if __name__ == "__main__":
-#     recognizer_gui = SpeechRecognizer()
-#     recognizer_gui.show_welcome_window("User")
+if __name__ == "__main__":
+    recognizer_gui = SpeechRecognizer()
+    recognizer_gui.show_welcome_window("User")
 
 # def initialize(user):
 #     recon = SpeechRecognizer()

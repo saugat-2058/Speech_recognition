@@ -1,5 +1,6 @@
-from flask import Flask, render_template,jsonify,request,session
+from flask import Flask, render_template,jsonify,request,session,redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import not_
 from threading import Thread
 import os
 import bcrypt
@@ -22,6 +23,7 @@ class Users(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=True, nullable=False)
+    role = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -159,10 +161,45 @@ def tkinter_window_status():
 def logout():
     session.clear()
     return render_template('login.html')
-
+ 
 @app.route('/admin')
 def admin():
-    return "this is admin page"
+    if session.get('logged_in'):
+        existing_user = Users.query.filter_by(username=session.get('user')).first()
+        if(existing_user.role==1):
+            user = session.get('user')
+            users = Users.query.filter(Users.id != existing_user.id).all()
+            return render_template('indexsau.html',message="Welcome",user=user,users=users)
+        else:
+            return render_template("logina.html")
+    else:
+        return render_template("logina.html")
+        
+    
+
+@app.route('/login-submita', methods=['POST'])
+def login_submita():
+    # Extract form data 
+    username = request.form['username']
+    # email = request.form['email']
+    password = request.form['password']
+    existing_user = Users.query.filter_by(username=username).first()
+    if existing_user:
+            if bcrypt.checkpw(password.encode('utf-8'), existing_user.password.encode('utf-8')):
+            #   new_user = Users(username=username)
+            #   db.session.add(new_user)
+              if existing_user.role==1:
+                session['logged_in'] = True
+                session['user'] = username
+                user = Users.query.filter(Users.id != existing_user.id).all()
+                # print(user)
+                return render_template('indexsau.html',message="Login Successgull",user=username,users=user)
+              else:
+                  return render_template('logina.html',message="You Dont Have access of the admin! Cannot login")
+            else:
+              return render_template('logina.html',message="invalid credentials")    
+    else:
+        return render_template('logina.html',message="invalid credentials")    
 
 @app.route('/profile')
 def profile():
@@ -174,6 +211,33 @@ def profile():
         return render_template("profile.html",user=username,email=user_email)
     else:
          return render_template('login.html', message="Please Login In To GO TO this page")
+     
+@app.route('/delete')
+def delete():
+    if session.get('logged_in'):
+        existing_user = Users.query.filter_by(username=session.get('user')).first()
+        if(existing_user.role==1):
+            user_id = request.args.get('id')
+            user = session.get('user')
+            existing_user = Users.query.filter_by(username=user).first()
+            users = Users.query.filter(Users.id != existing_user.id).all()
+            if user_id:
+            # Query the database to get the user object
+                user = Users.query.get(user_id)
+                if user:
+                    # Delete the user from the database
+                    db.session.delete(user)
+                    db.session.commit()
+                    user = session.get('user')
+                    return redirect('/admin')
+                else:
+                    return render_template('indexsau.html',message="User Not FOund",user=user,users=users)
+            else:
+                    return render_template('indexsau.html',message="User not found with the current id",user=user,users=users)
+        else:
+            return render_template('indexs.html', message="You cannot Perform this operation Access Denied")
+    else:
+        return render_template('login.html', message="Please Login In To GO TO this page")
 
 @app.route('/change_pass',methods=['POST','GET'])
 def change_pass():
