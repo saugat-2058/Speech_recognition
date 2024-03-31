@@ -137,18 +137,18 @@ form {
 
 <div class="form-wrapper">
   
-  <form action="/change_other" method="post">
+  <form action="/change_other" method="post" id="signup-form" onsubmit="return validateForm()">
     
     <div class="form-item">
       {% if message %}
-      <p>{{ message }}</p>
+      <p id="mess" style="color: red;">{{ message }}</p>
       {% else %}
       <p></p>
       {% endif %}
       <label for="text">
         <span class="fontawesome-user"></span></label>
-      <input type="text" name="username" required="required" placeholder="username"></input>
-     <input type="text" name="email" required="required" placeholder="email"></input>
+        <input type="email" id="email" name="email" required placeholder="Email">
+        <input type="text" id="username" name="username" required placeholder="Username">
      <!-- <p>Not yet user <b><em><a href="/signup">Register</a></em></b></p> -->
     </div>
     
@@ -159,7 +159,35 @@ form {
     
   </form>
   <!-- / end form -->
+  <script>
+    
+  function validateForm() {
+      var emailInput = document.getElementById('email').value;
+      var usernameInput = document.getElementById('username').value;
+      // var passwordInput = document.getElementById('password').value;
+      // var confirmPasswordInput = document.getElementById('confirm-password').value;
+      var inf = document.getElementById('mess')
+      inf.textContent = "";
 
+      // Email validation
+      // Email validation
+      var emailRegex = /\S+@\S+\.\S+/;
+      if (!emailRegex.test(emailInput)) {
+          // Set the new message
+          inf.innerHTML = 'Please enter a valid email address.';
+          return false;
+      }
+
+      // Username validation
+      if (usernameInput.trim() === '') {
+          inf.innerHTML = 'Username cannot be empty.';
+          return false;
+      }
+
+
+      return true; // Proceed with form submission if all validations pass
+  }
+</script>
 <!-- / end form-wrapper -->
 
 </div>

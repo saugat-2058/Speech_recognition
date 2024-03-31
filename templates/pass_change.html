@@ -137,18 +137,18 @@ form {
 
 <div class="form-wrapper">
   
-  <form action="/change_pass" method="post">
+  <form action="/change_pass" id="signup-form" method="post" onsubmit="return validateForm()">
     
     <div class="form-item">
       {% if message %}
-      <p>{{ message }}</p>
+      <p id="mess" style="color: red;">{{ message }}</p>
       {% else %}
       <p></p>
       {% endif %}
       <label for="text">
         <span class="fontawesome-user"></span></label>
-      <input type="text" name="password" required="required" placeholder="password"></input>
-     <input type="password" name="cpassword" required="required" placeholder="confirm password"></input>
+        <input type="password" id="password" name="password" required placeholder="Password">
+        <input type="password" id="confirm-password" name="confirmp" required placeholder="Confirm Password">
      <!-- <p>Not yet user <b><em><a href="/signup">Register</a></em></b></p> -->
     </div>
     
@@ -159,7 +159,47 @@ form {
     
   </form>
   <!-- / end form -->
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var confirmPasswordInput = document.getElementById("confirm-password");
+        var checkbox = document.getElementById("show-password-toggle");
 
+        if (checkbox.checked) {
+            passwordInput.type = "text";
+            confirmPasswordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+            confirmPasswordInput.type = "password";
+        }
+    }
+    function validateForm() {
+        var passwordInput = document.getElementById('password').value;
+        var confirmPasswordInput = document.getElementById('confirm-password').value;
+        var inf = document.getElementById('mess')
+        inf.textContent = "";
+
+
+        if (passwordInput.trim() === '') {
+            inf.innerHTML = 'Password cannot be empty.';
+            return false;
+        }
+        // Password length validation
+        var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
+        if (!passwordRegex.test(passwordInput)) {
+          inf.innerHTML = 'Password must contain at least<br><ul><li>one uppercase letter</li><li>one lowercase letter</li><li>one special character</li><li>one digit</li><li>and be at least 8 characters long.</li></ul>';
+            return false;
+        }
+
+        // Password matching validation
+        if (passwordInput !== confirmPasswordInput) {
+            inf.innerHTML = 'Passwords do not match.';
+            return false;
+        }
+
+        return true; // Proceed with form submission if all validations pass
+    }
+</script>
 <!-- / end form-wrapper -->
 
 </div>

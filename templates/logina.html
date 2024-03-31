@@ -131,6 +131,12 @@ form {
     
 <div class="circle"></div>
 <br>
+<ul>
+
+  <li><a style="color: wheat;" href="/speech-recon">return home</a></li>
+  <li><a style="color: wheat;"  href="/">return landing page</a></li>
+  <li><a style="color: wheat;"  href="/signup">Signup page</a></li>
+</ul>
 <div class="title">TRIOSNA ADMIN LOGIN</div>
 
 <link href='https://fonts.googleapis.com/css?family=Vollkorn:400,700' rel='stylesheet' type='text/css'>
@@ -141,14 +147,16 @@ form {
     
     <div class="form-item">
       {% if message %}
-      <p>{{ message }}</p>
+      <p id="mess" style="color: red;">{{ message }}</p>
       {% else %}
-      <p></p>
+      <p id="mess"></p>
       {% endif %}
       <label for="text">
         <span class="fontawesome-user"></span></label>
       <input type="text" name="username" required="required" placeholder="Username"></input>
-     <input type="password" name="password" required="required" placeholder="Password"></input>
+      <input id ="password" type="password" name="password" required="required" placeholder="Password"></input>
+      <input type="checkbox" style="height: 20px;margin: auto;width: 20px;padding: auto;" id="show-password-toggle" class="show-password-checkbox" onclick="togglePassword()"> <!-- Checkbox for Show/Hide Password -->
+         <label for="show-password-toggle" style="margin-top: 5px;" class="show-password-label">Show Password</label>
      <!-- <p>Not yet user <b><em><a href="/signup">Register</a></em></b></p> -->
     </div>
     
@@ -158,6 +166,20 @@ form {
     
     
   </form>
+  <script>
+    function togglePassword() {
+      var passwordInput = document.getElementById("password");
+      var checkbox = document.getElementById("show-password-toggle");
+
+      if (checkbox.checked) {
+          passwordInput.type = "text";
+          // confirmPasswordInput.type = "text";
+      } else {
+          passwordInput.type = "password";
+          // confirmPasswordInput.type = "password";
+      }
+  }
+</script>
   <!-- / end form -->
 
 <!-- / end form-wrapper -->

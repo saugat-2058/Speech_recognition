@@ -123,7 +123,16 @@ form {
   color: #c0c0c0;
 }
 
+.show-password-label {
+        display: inline-block;
+        margin-left: 5px; /* Adjust as needed */
+        font-size: 14px; /* Adjust as needed */
+    }
 
+    .show-password-checkbox {
+        transform: scale(0.8); /* Adjust the scale factor as needed */
+        vertical-align: middle;
+    }
 
   </style>
 </head>
@@ -131,32 +140,97 @@ form {
     
 <div class="circle"></div>
 <br>
-<div class="title">TRIOSNA</div>
+<ul>
+
+  <li><a style="color: wheat;" href="/speech-recon">return home</a></li>
+  <li><a style="color: wheat;"  href="/">return landing page</a></li>
+  <li><a style="color: wheat;"  href="/login">Login page</a></li>
+</ul>
+<div class="title">TRIOSNA USER SIGNUP</div>
 
 <link href='https://fonts.googleapis.com/css?family=Vollkorn:400,700' rel='stylesheet' type='text/css'>
 
 <div class="form-wrapper">
   
-  <form action="/signup-submit" method="post">
-    
+  <form id="signup-form" action="/signup-submit" method="post" onsubmit="return validateForm()">
     <div class="form-item">
-      <p> {{message}}</p>
-      <label for="text">
-        <span class="fontawesome-user"></span></label>
-        <input type="text" name="email" required="required" placeholder="Email"></input>
-      <input type="text" name="username" required="required" placeholder="Username"></input>
-     <input type="password" name="password" required="required" placeholder="Password"></input>
+        <p id="mess" style="color: red;margin-bottom: 5px;
+        font-size: 14px;
+        margin-top: 5px;">{{ message }}</p>
+        <label for="email"><span class="fontawesome-user"></span></label>
+        <input type="email" id="email" name="email" required placeholder="Email">
+        <input type="text" id="username" name="username" required placeholder="Username">
+        <input type="password" id="password" name="password" required placeholder="Password">
+        <input type="password" id="confirm-password" name="confirmp" required placeholder="Confirm Password">
+        <input type="checkbox" style="height: 20px;margin: auto;width: 20px;padding: auto;" id="show-password-toggle" class="show-password-checkbox" onclick="togglePassword()"> <!-- Checkbox for Show/Hide Password -->
+        <label for="show-password-toggle" style="margin-top: 5px;" class="show-password-label">Show Password</label>
+    
     </div>
     <div>
-      <p>Already user ? click <b><em><a href="/login">Here</a></em></b> to login</p>
+        <p style="font-size: 16px;margin-top: 5px;">Already a user? Click <b><em><a style="color: aqua;" href="/login">Here</a></em></b> to login</p>
     </div>
-    
-   <div class="button-panel">
-      <input type="submit" class="button" title="Register" value="Register"></input>
+    <div class="button-panel">
+        <input type="submit" class="button" title="Register" value="Register">
     </div>
-    
-    
-  </form>
+</form>
+
+<script>
+      function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var confirmPasswordInput = document.getElementById("confirm-password");
+        var checkbox = document.getElementById("show-password-toggle");
+
+        if (checkbox.checked) {
+            passwordInput.type = "text";
+            confirmPasswordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+            confirmPasswordInput.type = "password";
+        }
+    }
+    function validateForm() {
+        var emailInput = document.getElementById('email').value;
+        var usernameInput = document.getElementById('username').value;
+        var passwordInput = document.getElementById('password').value;
+        var confirmPasswordInput = document.getElementById('confirm-password').value;
+        var inf = document.getElementById('mess')
+        inf.textContent = "";
+
+        // Email validation
+        // Email validation
+        var emailRegex = /\S+@\S+\.\S+/;
+        if (!emailRegex.test(emailInput)) {
+            // Set the new message
+            inf.innerHTML = 'Please enter a valid email address.';
+            return false;
+        }
+
+        // Username validation
+        if (usernameInput.trim() === '') {
+            inf.innerHTML = 'Username cannot be empty.';
+            return false;
+        }
+        if (passwordInput.trim() === '') {
+            inf.innerHTML = 'Password cannot be empty.';
+            return false;
+        }
+        // Password length validation
+        var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
+        if (!passwordRegex.test(passwordInput)) {
+          inf.innerHTML = 'Password must contain at least<br><ul><li>one uppercase letter</li><li>one lowercase letter</li><li>one special character</li><li>one digit</li><li>and be at least 8 characters long.</li></ul>';
+            return false;
+        }
+
+        // Password matching validation
+        if (passwordInput !== confirmPasswordInput) {
+            inf.innerHTML = 'Passwords do not match.';
+            return false;
+        }
+
+        return true; // Proceed with form submission if all validations pass
+    }
+</script>
+
   <!-- / end form -->
 
 <!-- / end form-wrapper -->
