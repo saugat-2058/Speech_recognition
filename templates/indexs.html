@@ -636,22 +636,42 @@
           <li class="nav-item">
             <a class="nav-link link text-black display-4" href="/test_sys">Test System</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link link text-black display-4" href="/admin">Admin Section</a>
+          </li>
         </ul>
         {% if user %}
         
-        <h3 style="margin-right: 20px;">Hello {{ user }}</h3>
+        <h3 style="    width: 105px;
+        font-size: 17px;
+        font-family: fantasy;
+        margin: auto;margin-right:3px">Hello {{ user }}</h3>
         <a href="/profile">
-          <button style="background-color: rgb(96, 218, 136);margin-right:3px;padding: 7px;border-radius: 10px;">View Profile</button>
+          <button style="    background-color: rgb(96, 218, 136);
+          margin-left: 3px;
+          padding: 7px;
+          border-radius: 10px;
+          width: 100px;
+      ">View Profile</button>
       </a>
         <div class="navbar-buttons mbr-section-btn">
-          <a class="btn btn-primary display-4" href="/logout">Logout</a>
+          <a  style="    width: 86px;
+          padding: 1px;" class="btn btn-primary display-4" href="/logout">Logout</a>
         </div>
         {% else %}
         <div class="navbar-buttons mbr-section-btn">
-          <a class="btn btn-primary display-4" href="/login">Login</a>
+          <a class="btn btn-primary display-4" style="background-color: rgb(96, 218, 136) !important;
+          margin-left: 3px;
+          padding: 7px;
+          border-radius: 10px;
+          width: 100px;
+          color: black !important;
+      " href="/login">Login</a>
         </div>
         <div class="navbar-buttons mbr-section-btn">
-          <a class="btn btn-primary display-4" href="/signup">Join Now</a>
+          <a class="btn btn-primary display-4" style="border-radius: 10px;
+          width: 122px;
+          padding: 7px;" href="/signup">Join Now</a>
         </div>
         {% endif %}
        

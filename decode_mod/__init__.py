@@ -10,6 +10,7 @@ def open_dll():
         os.add_dll_directory(dlldir)
     return _ffi.dlopen(os.path.join(dlldir, "libvosk.dll"))
 
+
 _c = open_dll()
 
 
@@ -29,8 +30,10 @@ class Model:
         else:
             model_path = self.get_model_by_name(model_name)
         return str(model_path)
+
     def get_handle(self):
         return self._handle
+
 
 class DecodeModel:
     def __init__(self, *args):
@@ -55,7 +58,10 @@ class DecodeModel:
         return _ffi.string(_c.vosk_recognizer_result(self._handle)).decode("utf-8")
 
     def FinalResult(self):
-        return _ffi.string(_c.vosk_recognizer_final_result(self._handle)).decode("utf-8")
+        return _ffi.string(_c.vosk_recognizer_final_result(self._handle)).decode(
+            "utf-8"
+        )
+
 
 def SetLogLevel(level):
     return _c.vosk_set_log_level(level)
@@ -63,6 +69,7 @@ def SetLogLevel(level):
 
 def GpuInit():
     _c.vosk_gpu_init()
+
 
 def GpuThreadInit():
     _c.vosk_gpu_thread_init()
